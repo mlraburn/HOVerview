@@ -12,7 +12,8 @@ def main() -> None:
     print("=" * 60)
     print()
 
-    cheating_via_their_api()
+    print("EXPRESS LANES ARE...")
+    print(cheating_via_their_api())
 
 
 def cheating_via_their_api() -> str:
@@ -28,9 +29,7 @@ def cheating_via_their_api() -> str:
 
     response_dict: dict = response.json()
 
-    print(response_dict)
-
-    return str(response_dict)
+    return response_dict['road95and395']
 
 
 if __name__ == "__main__":
