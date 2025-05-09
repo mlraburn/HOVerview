@@ -1,3 +1,7 @@
+"""
+A Python implementation of getting the direction of the express lanes on 95N/S in Virginia
+"""
+
 import requests
 
 def main() -> None:
@@ -5,9 +9,10 @@ def main() -> None:
     Main function that lets a user know what direction the express lanes are going in
     :return:
     """
+    print()
     print("=" * 60)
     print()
-    print("WELCOME TO HOVerview")
+    print(" " * 18 + "WELCOME TO HOVerview")
     print()
     print("=" * 60)
     print()
