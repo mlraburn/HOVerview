@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  <!-- enable mobile sizing -->
     <meta name="theme-color" content="#003F87"> <!-- set color theme -->
 
+    <!-- iOS PWA meta tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">  <!-- Open like an app -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">  <!-- Convert status bar to black -->
+    <meta name="apple-mobile-web-app-title" content="HOVerview"> <!-- App Name -->
+
     <title>HOVerview</title>
 
     <link rel="stylesheet" href="css/styles.css"> <!-- css -->
@@ -13,6 +18,24 @@
 
 </head>
 <body>
+
+    <div class="container">
+        <header>
+            <h1>HOVerview</h1>
+            <p class="subtitle">95 Express Lane Status</p>
+        </header>
+    </div>
+
+    <main>
+        <div id="status" class="status">
+            <p id="statusText" class="statusText">Loading...</p>
+        </div>
+        <div id="arrow" class="arrow">⟷</div>  <!-- Default Arrow is Horizontal Both -->
+        <div id="info" class="info">
+            <p id="last-updated" class="last-updated">Last Updated: <span id="last-updated-time">...</span></p>
+        </div>
+        <button id="refresh-button" class="refresh-button">Refresh</button>
+    </main>
 
 </body>
 </html>
