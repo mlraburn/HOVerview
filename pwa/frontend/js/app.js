@@ -12,6 +12,6 @@ const API_URL = 'https://www.expresslanes.com/maps-api/lane-status';
 
 
 
-const getStatusOfLanesis = () => {
+async function getStatusOfLanes() {
 
 }
