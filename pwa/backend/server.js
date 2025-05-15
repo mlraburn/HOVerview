@@ -33,7 +33,7 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'frontend')));
 
 // When front end browser goes here then run the code
-app.get('/lane-status', async (req, res) => {
+app.get('api/lane-status', async (req, res) => {
     try {
         // Make the API request to the express lanes
         const response = await axios.get(API_URL);
