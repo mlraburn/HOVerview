@@ -11,7 +11,7 @@ import axios from 'axios';
 import cors from 'cors';
 
 // base packages
-import { fileURLToPath } from 'url';  // base node.js
+import { fileURLToPath } from 'url';  // base node.js needed for __filename
 import path from 'path';  // base node.js
 
 // get filename and directory name
@@ -26,11 +26,11 @@ const API_URL = 'https://www.expresslanes.com/maps-api/lane-status';
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Enable CORS
+// Enable CORS for the people
 app.use(cors());
 
 // Serve static files from the public directory
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'frontend')));
 
 // When front end browser goes here then run the code
 app.get('/lane-status', async (req, res) => {
@@ -42,15 +42,15 @@ app.get('/lane-status', async (req, res) => {
 
         res.json({
             direction: data.road95and395,
-            timestamp: new Date().toISOString(),
+            timestamp: new Date().toISOString()
         });
     } catch (error) {
         console.error('Error fetching express lanes data:', error);
 
         // Return error to client
         res.status(500).json({
-            error: 'Failed to fetch express lanes direction';
-            message: error.message;
+            error: 'Failed to fetch express lanes direction',
+            message: error.message
         });
     }
 });
