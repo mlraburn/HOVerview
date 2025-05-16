@@ -30,10 +30,10 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 
 // Serve static files from the public directory
-app.use(express.static(path.join(__dirname, 'frontend')));
+app.use(express.static(path.join(__dirname, '..', 'frontend')));
 
 // When front end browser goes here then run the code
-app.get('api/lane-status', async (req, res) => {
+app.get('/api/lane-status', async (req, res) => {
     try {
         // Make the API request to the express lanes
         const response = await axios.get(API_URL);
@@ -53,4 +53,8 @@ app.get('api/lane-status', async (req, res) => {
             message: error.message
         });
     }
+});
+
+app.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`);
 });
