@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  <!-- enable mobile sizing -->
-    <meta name="theme-color" content="#4285f4"> <!-- set color theme -->
+    <meta name="theme-color" content="#2a8644"> <!-- set color theme to match background -->
 
     <!-- iOS PWA meta tags -->
     <meta name="mobile-web-app-capable" content="yes">  <!-- Open like an app -->
@@ -20,53 +20,50 @@
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <h1>HOVerview</h1>
-            <p class="subtitle">95 Express Lane Status</p>
-        </header>
+<div class="container">
+    <header>
+        <h1>HOVerview</h1>
+        <p class="subtitle">95 Express Lane Status</p>
+    </header>
 
-        <main>
-            <div id="status" class="status">
-                <p id="statusText" class="statusText">Starting...</p>
-            </div>
+    <main>
+        <div id="status" class="status">
+            <p id="statusText" class="statusText">Starting...</p>
+        </div>
 
-            <div id="arrow" class="arrow">⟷</div>  <!-- Default Arrow is Horizontal Both -->
+        <div id="arrow" class="arrow">↔</div>  <!-- Changed to a double arrow character -->
 
-            <div id="info" class="info">
-                <p id="last-updated" class="last-updated">Last Updated: <span id="last-updated-time">...</span></p>
-            </div>
+        <div id="info" class="info">
+            <p id="last-updated" class="last-updated">Last Updated: <span id="last-updated-time" class="fade-time">...</span></p>
+        </div>
 
-            <!-- Refresh Button to grab data again -->
-            <button id="refresh-button" class="refresh-button">Refresh</button>
-        </main>
+        <!-- Refresh Button to grab data again -->
+        <button id="refresh-button" class="refresh-button">Refresh</button>
+    </main>
 
-        <footer>
-            <p>HOVerview PWA &copy; 2025</p>
-            <p class="small">Data from Express Lanes API</p>
-        </footer>
-    </div>
+    <footer>
+        <p>HOVerview PWA &copy; 2025</p>
+        <p class="small">Data from Express Lanes API</p>
+    </footer>
+</div>
 
-    <!-- Normal App Javascript -->
-    <script src="js/app.js"></script>
+<!-- Normal App Javascript -->
+<script src="/js/app.js"></script>
 
-    <!-- Background sync and caching -->
-    <script>
-
-        if ('serviceWorker' in navigator) {
-            <!-- on load -->
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/service-worker.js')
-                    .then((reg) => {
-                        console.log('ServiceWorker registration successful with scope: ', reg.scope);
-                    })
-                    .catch((err) => {
-                        console.log('ServiceWorker registration failed: ', err);
-                    });
-            });
-        }
-
-    </script>
+<!-- Background sync and caching -->
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then((reg) => {
+                    console.log('ServiceWorker registration successful with scope: ', reg.scope);
+                })
+                .catch((err) => {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+        });
+    }
+</script>
 
 </body>
 </html>

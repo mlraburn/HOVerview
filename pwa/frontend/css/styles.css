@@ -1,12 +1,40 @@
+@font-face {
+    font-family: 'WF Visual Sans';
+    src: url('fonts/WFVisualSans-RegularText.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'WF Visual Sans';
+    src: url('fonts/WFVisualSans-SemiBold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'WF Visual Sans';
+    src: url('fonts/WFVisualSans-Medium.ttf') format('truetype');
+    font-weight: 500; /* Medium weight */
+    font-style: normal;
+    font-display: swap;
+}
+
 :root {
     --primary-color: #4285f4;
-    --secondary-color: #34a853;
-    --text-color: #333;
-    --background-color: #f5f5f5;
-    --container-color: #fff;
+    --secondary-color: #2a8644;
+    --text-color: #4dffc3;
+    --background-color: #2a8644;
+    --container-color: rgba(255, 255, 255, 0.2);
     --accent-color: #fbbc05;
     --error-color: #ea4335;
     --offline-color: #9e9e9e;
+    --font-primary: 'WF Visual Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-display: 'WF Visual Sans', 'Montserrat', sans-serif;
+    --box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    --transition-standard: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 * {
@@ -16,10 +44,13 @@
 }
 
 body {
-    font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--background-color);
+    font-family: var(--font-primary);
+    background: linear-gradient(to bottom, var(--background-color), color-mix(in srgb, var(--background-color), black 60%));
     color: var(--text-color);
     line-height: 1.6;
+    min-height: 100vh;
+    margin: 0;
+    letter-spacing: 0.3px;
 }
 
 .container {
@@ -34,19 +65,27 @@ body {
 header {
     text-align: center;
     margin-bottom: 30px;
-    border-bottom: 2px solid var(--primary-color);
-    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 20px;
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: calc(100% + 40px);
 }
 
 h1 {
-    color: var(--primary-color);
-    font-size: 2.5rem;
-    margin-bottom: 5px;
+    font-family: var(--font-display);
+    font-size: 3rem;
+    margin-bottom: 8px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .subtitle {
-    font-size: 1.1rem;
-    color: #666;
+    font-size: 1.2rem;
+    font-weight: 500;
 }
 
 main {
@@ -57,10 +96,9 @@ main {
 }
 
 .status {
-    background-color: var(--container-color);
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 25px;
+    background-color: transparent;
+    border-radius: 16px;
+    padding: 30px;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -68,29 +106,27 @@ main {
     justify-content: center;
     margin: 20px 0;
     width: 100%;
+    backdrop-filter: blur(5px);
 }
 
 .statusText {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 15px;
-    color: var(--primary-color);
-    transition: color 0.3s ease;
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    transition: var(--transition-standard);
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-/* Arrow container */
+/* Arrow styling - no more container, just the arrow */
 .arrow {
-    width: 120px;
-    height: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--primary-color);
-    border-radius: 50%;
-    font-size: 3.5rem;
-    color: white;
-    margin: 20px auto;
-    transition: transform 0.5s ease, background-color 0.3s ease;
+    font-size: 12rem; /* Much larger arrow */
+    margin: 25px auto;
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    font-weight: 900;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    line-height: 1;
 }
 
 /* Arrow directions */
@@ -108,55 +144,70 @@ main {
 
 .info {
     text-align: center;
-    margin: 20px 0;
+    margin: 25px 0;
     width: 100%;
+    background-color: transparent;
+    padding: 15px;
+    border-radius: 12px;
 }
 
 .last-updated {
-    font-size: 0.9rem;
-    color: #666;
+    font-size: 1rem;
+    font-weight: 500;
 }
 
 #last-updated-time {
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .refresh-button {
     display: block;
     width: 100%;
     max-width: 300px;
-    background-color: var(--primary-color);
-    color: white;
+    background-color: #66ffcc;
     border: none;
-    border-radius: 10px;
-    padding: 15px;
-    font-size: 1.1rem;
-    font-weight: bold;
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    font-family: var(--font-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
     cursor: pointer;
-    margin: 20px 0;
-    transition: background-color 0.3s ease, transform 0.1s ease;
+    margin: 25px 0;
+    transition: var(--transition-standard);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .refresh-button:hover {
-    background-color: #3367d6;
+    background-color: #009966; /* Slightly darker on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
 }
 
 .refresh-button:active {
-    transform: scale(0.98);
+    transform: scale(0.98) translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 footer {
     text-align: center;
     margin-top: 30px;
-    padding-top: 15px;
-    border-top: 1px solid #ddd;
-    font-size: 0.9rem;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: calc(100% + 40px);
 }
 
 .small {
-    font-size: 0.8rem;
-    color: #777;
-    margin-top: 5px;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 8px;
 }
 
 /* Status states */
@@ -164,60 +215,87 @@ footer {
     color: var(--error-color);
 }
 
-.error .arrow {
-    background-color: var(--error-color);
-}
-
 .offline .statusText {
     color: var(--offline-color);
 }
 
-.offline .arrow {
-    background-color: var(--offline-color);
-}
-
 .northbound .statusText {
-    color: var(--secondary-color);
+
 }
 
 .northbound .arrow {
-    background-color: var(--secondary-color);
     transform: rotate(270deg);
 }
 
 .southbound .statusText {
-    color: var(--accent-color);
+
 }
 
 .southbound .arrow {
-    background-color: var(--accent-color);
     transform: rotate(90deg);
 }
 
-/* Animation keyframes */
+.pulse {
+    animation: pulse 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Enhanced Animation keyframes */
 @keyframes pulse {
+    0% { transform: scale(1); text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); }
+    50% { transform: scale(1.15); text-shadow: 0 8px 15px rgba(0, 0, 0, 0.4); }
+    100% { transform: scale(1); text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); }
+}
+
+.fade-time {
+    display: inline-block; /* Keep this to ensure the animation works properly */
+    animation: fade-animation 2s infinite ease-in-out;
+}
+
+@keyframes fade-animation {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.1; /* Fade to 40% opacity at the midpoint */
+    }
+}
+
+.pulse-arrow {
+    display: inline-block;
+    animation: pulse-time-animation 2s infinite ease-in-out;
+}
+
+@keyframes pulse-arrow-animation {
     0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
+    50% { transform: scale(1.1); } /* Adjust the scale value to control pulse intensity */
     100% { transform: scale(1); }
 }
 
-.pulse {
-    animation: pulse 0.8s ease;
+/* Add loading animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.arrow.loading {
+    animation: spin 1.5s linear infinite;
 }
 
 /* Responsive adjustments */
 @media (max-width: 480px) {
     .statusText {
-        font-size: 1.8rem;
+        font-size: 2rem;
     }
 
     .arrow {
-        width: 100px;
-        height: 100px;
-        font-size: 3rem;
+        font-size: 9rem; /* Increased from previous mobile size */
     }
 
     h1 {
-        font-size: 2rem;
+        font-size: 2.5rem;
+    }
+
+    .status {
+        padding: 25px 20px;
     }
 }

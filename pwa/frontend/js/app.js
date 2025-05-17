@@ -1,3 +1,5 @@
+// import packages
+
 // DOM elements
 const statusTextElement = document.getElementById('statusText');
 const statusElement = document.getElementById('status');
@@ -29,6 +31,10 @@ async function getStatusOfLanes() {
 
         console.log(timestampDate);
 
+        // Once we get an updated time we will stop fade on ...
+        // But we will post time kinda slow
+        updateTime(timestampDate);
+
         const actualDirection = directionString.trim().split(' ').pop();
 
         if (actualDirection === 'northbound') {
@@ -37,7 +43,7 @@ async function getStatusOfLanes() {
             arrowElement.classList.remove('southbound');
 
             // make arrow go up and change text
-            statusTextElement.textContent = 'North bound!';
+            statusTextElement.textContent = 'North Bound!';
             arrowElement.textContent = '↑';
 
             // add .northbound to status
@@ -50,7 +56,7 @@ async function getStatusOfLanes() {
             arrowElement.classList.remove('northbound');
 
             // make arrow go down and change text
-            statusTextElement.textContent = 'South bound!';
+            statusTextElement.textContent = 'South Bound!';
             arrowElement.textContent = '↓';
 
             // add .southbound to status
@@ -85,8 +91,43 @@ function initApp() {
 
     getStatusOfLanes();
 
+}
 
+function updateTime(timeStamp, delay = 1000) {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            lastUpdatedTimeElement.classList.remove('fade-time');
+            lastUpdatedTimeElement.textContent = updateTimeLocalAndFormat(timeStamp);
+            resolve();
+        }, delay);
+    });
+}
 
+function updateTimeLocalAndFormat(timeStamp) {
+    const date = new Date(timeStamp);
+
+    // Unless you use getUTC... functions then it will be local time
+    // Format Hours
+    let hours = date.getHours() % 12;  // get 0 - 11 using mod
+    hours = hours ? hours : 12;  // because 0 is false then convert 0 to 12
+    const formattedHours = hours.toString().padStart(2, '0'); // ensure 2 digits
+
+    // Format Minutes
+    const formattedMinutes = date.getMinutes().toString().padStart(2, '0');
+
+    // Format AM PM (only A or P)
+    const formattedAMPM = date.getHours() >= 12 ? 'P' : 'A';
+
+    // Format Day
+    const formattedDay = date.getDate().toString().padStart(2, '0');
+
+    // Format Month (MMM)
+    const formattedMonth = date.toLocaleString('en-US', {month: 'long'}).slice(0, 3).toUpperCase();
+
+    // Format Year
+    const formattedYear = date.getFullYear();
+
+    return `${formattedHours}:${formattedMinutes}${formattedAMPM} ${formattedDay} ${formattedMonth} ${formattedYear}`;
 }
 
 document.addEventListener('DOMContentLoaded', initApp);
