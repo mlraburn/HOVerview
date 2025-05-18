@@ -119,27 +119,58 @@ main {
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-/* Arrow styling - no more container, just the arrow */
+/* Arrow styling with infinite pulse animation */
 .arrow {
-    font-size: 12rem; /* Much larger arrow */
+    font-size: 12rem;
     margin: 25px auto;
-    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     font-weight: 900;
     text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     line-height: 1;
+    animation: arrow-pulse 2s infinite cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-/* Arrow directions */
-.arrow.north {
-    transform: rotate(270deg);
+/* Separate keyframes for arrow pulse */
+@keyframes arrow-pulse {
+    0%, 100% {
+        transform: scale(1);
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+    50% {
+        transform: scale(1.1);
+        text-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+    }
 }
 
-.arrow.south {
-    transform: rotate(90deg);
+/* Direction classes with specialized animations */
+.arrow.northbound {
+    animation: arrow-pulse-north 2s infinite cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.arrow.horizontal {
-    transform: rotate(0deg);
+.arrow.southbound {
+    animation: arrow-pulse-south 2s infinite cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Keyframes that include both pulse and rotation */
+@keyframes arrow-pulse-north {
+    0%, 100% {
+        transform: rotate(270deg) scale(1);
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+    50% {
+        transform: rotate(270deg) scale(1.1);
+        text-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+    }
+}
+
+@keyframes arrow-pulse-south {
+    0%, 100% {
+        transform: rotate(90deg) scale(1);
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+    50% {
+        transform: rotate(90deg) scale(1.1);
+        text-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+    }
 }
 
 .info {
@@ -158,6 +189,22 @@ main {
 
 #last-updated-time {
     font-weight: 600;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.5px;
+}
+
+.fade-time {
+    display: inline-block;
+    animation: fade-animation 2s infinite ease-in-out;
+}
+
+@keyframes fade-animation {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.1;
+    }
 }
 
 .refresh-button {
@@ -217,58 +264,6 @@ footer {
 
 .offline .statusText {
     color: var(--offline-color);
-}
-
-.northbound .statusText {
-
-}
-
-.northbound .arrow {
-    transform: rotate(270deg);
-}
-
-.southbound .statusText {
-
-}
-
-.southbound .arrow {
-    transform: rotate(90deg);
-}
-
-.pulse {
-    animation: pulse 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-/* Enhanced Animation keyframes */
-@keyframes pulse {
-    0% { transform: scale(1); text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); }
-    50% { transform: scale(1.15); text-shadow: 0 8px 15px rgba(0, 0, 0, 0.4); }
-    100% { transform: scale(1); text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); }
-}
-
-.fade-time {
-    display: inline-block; /* Keep this to ensure the animation works properly */
-    animation: fade-animation 2s infinite ease-in-out;
-}
-
-@keyframes fade-animation {
-    0%, 100% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.1; /* Fade to 40% opacity at the midpoint */
-    }
-}
-
-.pulse-arrow {
-    display: inline-block;
-    animation: pulse-time-animation 2s infinite ease-in-out;
-}
-
-@keyframes pulse-arrow-animation {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); } /* Adjust the scale value to control pulse intensity */
-    100% { transform: scale(1); }
 }
 
 /* Add loading animation */

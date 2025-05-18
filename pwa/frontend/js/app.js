@@ -21,10 +21,13 @@ async function getStatusOfLanes() {
 
         if (!response.ok) {
             statusTextElement.textContent = 'error'
+            lastUpdatedTimeElement.classList.add('fade-time');
             throw new Error('API request failed.');
         }
 
         const data = await response.json();
+
+        await sleep(1000)
 
         const directionString = data.direction;
         const timestampDate = data.timestamp;
@@ -37,14 +40,17 @@ async function getStatusOfLanes() {
 
         const actualDirection = directionString.trim().split(' ').pop();
 
+        // We only spin animate the arrow if the status of the arrow is different
+        const spinObj = checkIfArrowStatusIsDifferent(actualDirection);
+
+
         if (actualDirection === 'northbound') {
             // add .northbound and remove others
             arrowElement.classList.add('northbound');
             arrowElement.classList.remove('southbound');
 
-            // make arrow go up and change text
+            // make arrow go up
             statusTextElement.textContent = 'North Bound!';
-            arrowElement.textContent = '↑';
 
             // add .northbound to status
             statusElement.classList.add('northbound');
@@ -57,7 +63,7 @@ async function getStatusOfLanes() {
 
             // make arrow go down and change text
             statusTextElement.textContent = 'South Bound!';
-            arrowElement.textContent = '↓';
+
 
             // add .southbound to status
             statusElement.classList.add('southbound');
@@ -69,18 +75,11 @@ async function getStatusOfLanes() {
 
             // make arrow go horizontal and change text
             statusTextElement.textContent = 'Loading...';
-            arrowElement.textContent = '⟷'
 
             // remove .southbound and .northbound from status
             statusElement.classList.remove('northbound');
             statusElement.classList.remove('southbound');
         }
-
-        // Add the pulse animation
-        arrowElement.classList.add('pulse');
-        setTimeout(() => {
-            arrowElement.classList.remove('pulse');
-        }, 800);
 
     } catch (error) {
         console.log('Error:', error);
@@ -128,6 +127,33 @@ function updateTimeLocalAndFormat(timeStamp) {
     const formattedYear = date.getFullYear();
 
     return `${formattedHours}:${formattedMinutes}${formattedAMPM} ${formattedDay} ${formattedMonth} ${formattedYear}`;
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function checkIfArrowStatusIsDifferent(newDirection) {
+
+    let currentDirection = ''
+
+    if (arrowElement.classList.length > 1) {
+        if (arrowElement.classList.contains('northbound')) {
+            currentDirection = 'northbound';
+        } else {
+            currentDirection = 'southbound';
+        }
+    } else {
+        currentDirection = 'unknown';
+    }
+
+    if (newDirection === 'northbound') {
+
+    } else if (newDirection === 'southbound') {
+
+    } else {
+
+    }
 }
 
 document.addEventListener('DOMContentLoaded', initApp);
