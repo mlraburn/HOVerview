@@ -153,22 +153,22 @@ main {
 /* Keyframes that include both pulse and rotation */
 @keyframes arrow-pulse-north {
     0%, 100% {
-        transform: rotate(270deg) scale(1);
+        transform: rotate(0deg) scale(1);
         text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     }
     50% {
-        transform: rotate(270deg) scale(1.1);
+        transform: rotate(0deg) scale(1.1);
         text-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
     }
 }
 
 @keyframes arrow-pulse-south {
     0%, 100% {
-        transform: rotate(90deg) scale(1);
+        transform: rotate(0deg) scale(1);
         text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     }
     50% {
-        transform: rotate(90deg) scale(1.1);
+        transform: rotate(0deg) scale(1.1);
         text-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
     }
 }

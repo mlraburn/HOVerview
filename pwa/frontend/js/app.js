@@ -42,7 +42,51 @@ async function getStatusOfLanes() {
 
         // We only spin animate the arrow if the status of the arrow is different
         const spinObj = checkIfArrowStatusIsDifferent(actualDirection);
+        if (spinObj.spin) {
+            // we need to spin by spinObj.degrees amount of degrees
+            // 1. Create a unique animation name
+            const animationName = `spin-${Date.now()}`;
 
+            // 2. Create a style element for the keyframes
+            const styleEl = document.createElement('style');
+            styleEl.textContent = `
+                @keyframes ${animationName} {
+                    from { transform: rotate(0deg); }
+                    to { transform: rotate(${spinObj.degrees}deg); }
+                }`;
+            document.head.appendChild(styleEl);
+
+            // 3. Store the original text content and classes
+            const originalText = arrowElement.textContent;
+            const originalClasses = [...arrowElement.classList];
+
+            // 4. Remove direction classes temporarily during animation
+            arrowElement.classList.remove('northbound', 'southbound');
+
+            // 5. Apply the animation
+            arrowElement.style.animation = `${animationName} 0.5s ease-in-out forwards`;
+
+            // 6. Wait for animation to complete
+            const handleAnimationEnd = () => {
+                // Remove animation
+                arrowElement.style.animation = '';
+
+                // Update the text content based on new direction
+                if (actualDirection === 'northbound') {
+                    arrowElement.textContent = '↑';
+                } else if (actualDirection === 'southbound') {
+                    arrowElement.textContent = '↓';
+                } else {
+                    arrowElement.textContent = '→';
+                }
+
+                // Clean up
+                arrowElement.removeEventListener('animationend', handleAnimationEnd);
+                document.head.removeChild(styleEl);
+            };
+
+            arrowElement.addEventListener('animationend', handleAnimationEnd);
+        }
 
         if (actualDirection === 'northbound') {
             // add .northbound and remove others
@@ -133,9 +177,14 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function checkIfArrowStatusIsDifferent(newDirection) {
+function checkIfArrowStatusIsDifferent(nextDirection) {
 
-    let currentDirection = ''
+    let currentDirection = '';
+
+    let spinDictionary = {
+        spin: false,
+        degrees: 0
+    };
 
     if (arrowElement.classList.length > 1) {
         if (arrowElement.classList.contains('northbound')) {
@@ -147,13 +196,42 @@ function checkIfArrowStatusIsDifferent(newDirection) {
         currentDirection = 'unknown';
     }
 
-    if (newDirection === 'northbound') {
-
-    } else if (newDirection === 'southbound') {
-
-    } else {
-
+    if (nextDirection === currentDirection) {
+        return spinDictionary; // this returns the default which is spin: false, degrees 0
     }
+
+    if (nextDirection === 'northbound') {
+        if (currentDirection === 'unknown') {
+            // this is when the arrow is already facing right ->
+            spinDictionary.spin = true;
+            spinDictionary.degrees = -90;
+        } else {
+            // this is situation when arrow is already facing down.
+            spinDictionary.spin = true;
+            spinDictionary.degrees = 180;
+        }
+
+    } else if (nextDirection === 'southbound') {
+        if (currentDirection === 'unknown') {
+            spinDictionary.spin = true;
+            spinDictionary.degrees = 90;
+        } else {
+            //scenario where it is facing north already.
+            spinDictionary.spin = true;
+            spinDictionary.degrees = 180;
+        }
+    } else { // next direction is now unknown
+        if (currentDirection === 'northbound') {
+            spinDictionary.spin = true;
+            spinDictionary.degrees = 90;
+        } else {
+            // situation where the current direction is southbound
+            spinDictionary.spin = true;
+            spinDictionary.degrees = -90;
+        }
+    }
+
+    return spinDictionary;
 }
 
 document.addEventListener('DOMContentLoaded', initApp);
