@@ -134,6 +134,8 @@ function initApp() {
 
     getStatusOfLanes();
 
+    // add event listener to the refresh button
+    refreshButtonElement.addEventListener('click', getStatusOfLanes );
 }
 
 function updateTime(timeStamp, delay = 1000) {
@@ -233,5 +235,7 @@ function checkIfArrowStatusIsDifferent(nextDirection) {
 
     return spinDictionary;
 }
+
+
 
 document.addEventListener('DOMContentLoaded', initApp);
